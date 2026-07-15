@@ -96,6 +96,7 @@ export default function AdminCompanies() {
                     </td>
                     <td className="py-3 space-x-2">
                       <button onClick={() => handleImpersonate(c.id, c.business_name)} className="text-purple-600 hover:underline text-xs">Impersonate</button>
+                      <a href={`/admin/companies/${c.id}/documents`} className="text-indigo-600 hover:underline text-xs">Documents</a>
                       {c.status === 'pending' && (
                         <>
                           <button onClick={() => handleAction(c.id, 'approve')} className="text-green-600 hover:underline text-xs">Approve</button>

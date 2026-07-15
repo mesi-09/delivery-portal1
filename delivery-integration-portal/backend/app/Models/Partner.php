@@ -34,4 +34,9 @@ class Partner extends Model
     {
         return $this->hasMany(Delivery::class);
     }
+
+    public function documents()
+    {
+        return $this->hasMany(PartnerDocument::class);
+    }
 }

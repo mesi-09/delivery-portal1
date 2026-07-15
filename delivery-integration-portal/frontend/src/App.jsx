@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminCompanies from './pages/AdminCompanies';
+import AdminCompanyDocuments from './pages/AdminCompanyDocuments';
 import AdminDeliveries from './pages/AdminDeliveries';
 import AdminAuditLog from './pages/AdminAuditLog';
 import AdminAnalytics from './pages/AdminAnalytics';
@@ -25,6 +26,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
           <Route path="/admin/companies" element={<ProtectedRoute><AdminCompanies /></ProtectedRoute>} />
+          <Route path="/admin/companies/:id/documents" element={<ProtectedRoute><AdminCompanyDocuments /></ProtectedRoute>} />
           <Route path="/admin/deliveries" element={<ProtectedRoute><AdminDeliveries /></ProtectedRoute>} />
           <Route path="/admin/audit-log" element={<ProtectedRoute><AdminAuditLog /></ProtectedRoute>} />
           <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />

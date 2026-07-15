@@ -143,6 +143,50 @@ class PartnerController extends Controller
         return response()->json(['message' => 'Delivery cancelled successfully']);
     }
 
+    public function uploadDocument(Request $request)
+    {
+        $partner = $request->user()->partner;
+
+        if (!$partner) {
+            return response()->json(['message' => 'No partner profile found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
+            'type' => 'nullable|string|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $file = $request->file('file');
+        $path = $file->store('partner-documents/' . $partner->id, 'local');
+
+        $document = \App\Models\PartnerDocument::create([
+            'partner_id' => $partner->id,
+            'type' => $request->input('type', 'business_license'),
+            'original_name' => $file->getClientOriginalName(),
+            'file_path' => $path,
+            'mime_type' => $file->getClientMimeType(),
+            'size' => $file->getSize(),
+            'status' => 'pending',
+        ]);
+
+        return response()->json(['message' => 'Document uploaded successfully', 'document' => $document], 201);
+    }
+
+    public function listDocuments(Request $request)
+    {
+        $partner = $request->user()->partner;
+
+        if (!$partner) {
+            return response()->json(['message' => 'No partner profile found'], 404);
+        }
+
+        return response()->json(['documents' => $partner->documents()->orderByDesc('created_at')->get()]);
+    }
+
     public function updateWebhook(Request $request)
     {
         $partner = $request->user()->partner;

@@ -115,6 +115,68 @@ class AdminController extends Controller
     }
 
     // GET /api/admin/deliveries  (global view, all partners)
+    public function documentsForCompany($id)
+    {
+        $partner = \App\Models\Partner::find($id);
+
+        if (!$partner) {
+            return response()->json(['message' => 'Company not found'], 404);
+        }
+
+        return response()->json(['documents' => $partner->documents()->orderByDesc('created_at')->get()]);
+    }
+
+    public function downloadDocument($id)
+    {
+        $document = \App\Models\PartnerDocument::find($id);
+
+        if (!$document) {
+            return response()->json(['message' => 'Document not found'], 404);
+        }
+
+        if (!\Illuminate\Support\Facades\Storage::disk('local')->exists($document->file_path)) {
+            return response()->json(['message' => 'File not found on disk'], 404);
+        }
+
+        return \Illuminate\Support\Facades\Storage::disk('local')->download($document->file_path, $document->original_name);
+    }
+
+    public function approveDocument(Request $request, $id)
+    {
+        $document = \App\Models\PartnerDocument::find($id);
+
+        if (!$document) {
+            return response()->json(['message' => 'Document not found'], 404);
+        }
+
+        $document->update(['status' => 'approved', 'admin_note' => $request->input('note')]);
+
+        \App\Models\AuditLog::record($request->user()->id, 'document.approved', 'PartnerDocument', $document->id, [
+            'original_name' => $document->original_name,
+            'partner_id' => $document->partner_id,
+        ]);
+
+        return response()->json(['message' => 'Document approved', 'document' => $document]);
+    }
+
+    public function rejectDocument(Request $request, $id)
+    {
+        $document = \App\Models\PartnerDocument::find($id);
+
+        if (!$document) {
+            return response()->json(['message' => 'Document not found'], 404);
+        }
+
+        $document->update(['status' => 'rejected', 'admin_note' => $request->input('note')]);
+
+        \App\Models\AuditLog::record($request->user()->id, 'document.rejected', 'PartnerDocument', $document->id, [
+            'original_name' => $document->original_name,
+            'partner_id' => $document->partner_id,
+        ]);
+
+        return response()->json(['message' => 'Document rejected', 'document' => $document]);
+    }
+
     public function deliveries(Request $request)
     {
         $query = Delivery::with('partner:id,business_name');

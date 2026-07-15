@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/dashboard', [PartnerController::class, 'dashboard']);
         Route::get('/deliveries', [PartnerController::class, 'deliveries']);
         Route::post('/deliveries/manual', [PartnerController::class, 'createManualDelivery']);
+        Route::post('/documents', [PartnerController::class, 'uploadDocument']);
+        Route::get('/documents', [PartnerController::class, 'listDocuments']);
         Route::patch('/deliveries/{id}/cancel', [PartnerController::class, 'cancelManualDelivery']);
         Route::patch('/webhook', [PartnerController::class, 'updateWebhook']);
         Route::post('/api-keys', [PartnerController::class, 'generateApiKey']);
@@ -45,6 +47,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/companies/{id}/reject', [AdminController::class, 'rejectCompany']);
         Route::patch('/companies/{id}/suspend', [AdminController::class, 'suspendCompany']);
         Route::patch('/companies/{id}/rate-limit', [AdminController::class, 'updateRateLimit']);
+        Route::get('/companies/{id}/documents', [AdminController::class, 'documentsForCompany']);
+        Route::get('/documents/{id}/download', [AdminController::class, 'downloadDocument']);
+        Route::patch('/documents/{id}/approve', [AdminController::class, 'approveDocument']);
+        Route::patch('/documents/{id}/reject', [AdminController::class, 'rejectDocument']);
         Route::get('/deliveries', [AdminController::class, 'deliveries']);
         Route::patch('/deliveries/{id}/override-status', [AdminController::class, 'overrideDeliveryStatus']);
     });
