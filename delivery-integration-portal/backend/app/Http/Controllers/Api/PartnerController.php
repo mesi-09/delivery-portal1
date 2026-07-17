@@ -44,7 +44,11 @@ class PartnerController extends Controller
         if (!$partner) {
             return response()->json(['message' => 'No partner profile found'], 404);
         }
-        return response()->json(['partner' => $partner]);
+        $partnerData = $partner->toArray();
+        $partnerData['profile_picture_url'] = $partner->profile_picture_path
+            ? \Illuminate\Support\Facades\Storage::disk('public')->url($partner->profile_picture_path)
+            : null;
+        return response()->json(['partner' => $partnerData]);
     }
 
     public function updateProfile(Request $request)
