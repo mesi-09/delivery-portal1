@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const links = [
   { label: 'Overview', path: '/company/dashboard', icon: '📊' },
   { label: 'Deliveries', path: '/company/deliveries', icon: '📦' },
+  { label: 'Company Profile', path: '/company/profile', icon: '🏢' },
+  { label: 'Documents', path: '/company/documents', icon: '📄' },
   { label: 'Developer Settings', path: '/company/settings', icon: '🔑' },
 ];
 

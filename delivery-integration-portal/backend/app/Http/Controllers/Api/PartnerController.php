@@ -47,6 +47,59 @@ class PartnerController extends Controller
         return response()->json(['partner' => $partner]);
     }
 
+    public function updateProfile(Request $request)
+    {
+        $partner = $request->user()->partner;
+
+        if (!$partner) {
+            return response()->json(['message' => 'No partner profile found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'business_name' => 'required|string|max:255',
+            'business_email' => 'nullable|email',
+            'business_phone' => 'nullable|string',
+            'address' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $partner->update($validator->validated());
+
+        return response()->json(['partner' => $partner]);
+    }
+
+    public function uploadProfilePicture(Request $request)
+    {
+        $partner = $request->user()->partner;
+
+        if (!$partner) {
+            return response()->json(['message' => 'No partner profile found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|image|mimes:jpg,jpeg,png|max:5120',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        if ($partner->profile_picture_path) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($partner->profile_picture_path);
+        }
+
+        $path = $request->file('file')->store('profile-pictures', 'public');
+        $partner->update(['profile_picture_path' => $path]);
+
+        return response()->json([
+            'message' => 'Profile picture updated',
+            'profile_picture_url' => \Illuminate\Support\Facades\Storage::disk('public')->url($path),
+        ]);
+    }
+
     public function dashboard(Request $request)
     {
         $partner = $request->user()->partner;

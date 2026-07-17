@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import CompanySidebar from '../components/CompanySidebar';
+import CompanyStatusBanner from '../components/CompanyStatusBanner';
 import api from '../services/api';
 
 export default function CompanyDeliveries() {
@@ -77,6 +78,7 @@ export default function CompanyDeliveries() {
       <main className="ml-64 flex-1 p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Deliveries</h1>
+        <CompanyStatusBanner />
           <button
             onClick={() => setShowForm(!showForm)}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"

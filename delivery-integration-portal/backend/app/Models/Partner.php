@@ -18,6 +18,7 @@ class Partner extends Model
         'webhook_url',
         'status',
         'rate_limit_per_minute',
+        'profile_picture_path',
     ];
 
     public function user()

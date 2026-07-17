@@ -26,6 +26,55 @@ class AdminController extends Controller
     }
 
     // GET /api/admin/companies/{id}
+    public function approvalRequests()
+    {
+        $pending = Partner::with('user', 'documents')
+            ->withCount('deliveries')
+            ->where('status', 'pending')
+            ->orderBy('created_at')
+            ->get();
+
+        return response()->json(['companies' => $pending]);
+    }
+
+    public function uploadDocumentForCompany(Request $request, $id)
+    {
+        $partner = Partner::find($id);
+
+        if (!$partner) {
+            return response()->json(['message' => 'Company not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
+            'type' => 'nullable|string|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $file = $request->file('file');
+        $path = $file->store('partner-documents/' . $partner->id, 'local');
+
+        $document = \App\Models\PartnerDocument::create([
+            'partner_id' => $partner->id,
+            'type' => $request->input('type', 'business_license'),
+            'original_name' => $file->getClientOriginalName(),
+            'file_path' => $path,
+            'mime_type' => $file->getClientMimeType(),
+            'size' => $file->getSize(),
+            'status' => 'pending',
+        ]);
+
+        \App\Models\AuditLog::record($request->user()->id, 'document.uploaded_by_admin', 'PartnerDocument', $document->id, [
+            'partner_id' => $partner->id,
+            'original_name' => $document->original_name,
+        ]);
+
+        return response()->json(['message' => 'Document uploaded on behalf of company', 'document' => $document], 201);
+    }
+
     public function showCompany($id)
     {
         $partner = Partner::with('user', 'apiKeys')->withCount('deliveries')->find($id);

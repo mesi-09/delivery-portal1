@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import CompanySidebar from '../components/CompanySidebar';
+import CompanyStatusBanner from '../components/CompanyStatusBanner';
+import PartnerStatusBanner from '../components/PartnerStatusBanner';
 import api from '../services/api';
 
 export default function CompanyDashboard() {
@@ -25,7 +27,9 @@ export default function CompanyDashboard() {
     <div className="flex min-h-screen bg-gray-100">
       <CompanySidebar />
       <main className="ml-64 flex-1 p-8">
+        <CompanyStatusBanner />
         <h1 className="text-3xl font-bold mb-8">Company Dashboard</h1>
+        <PartnerStatusBanner />
 
         {loading && <p className="text-gray-500">Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}

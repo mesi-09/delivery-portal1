@@ -11,6 +11,9 @@ import AdminAuditLog from './pages/AdminAuditLog';
 import AdminAnalytics from './pages/AdminAnalytics';
 import TrackDelivery from './pages/TrackDelivery';
 import CompanyOnboarding from './pages/CompanyOnboarding';
+import CompanyProfile from './pages/CompanyProfile';
+import CompanyDocuments from './pages/CompanyDocuments';
+import AdminApprovalRequests from './pages/AdminApprovalRequests';
 import CompanyDashboard from './pages/CompanyDashboard';
 import CompanyDeliveries from './pages/CompanyDeliveries';
 import CompanySettings from './pages/CompanySettings';
@@ -26,11 +29,14 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
           <Route path="/admin/companies" element={<ProtectedRoute><AdminCompanies /></ProtectedRoute>} />
+          <Route path="/admin/approval-requests" element={<ProtectedRoute><AdminApprovalRequests /></ProtectedRoute>} />
           <Route path="/admin/companies/:id/documents" element={<ProtectedRoute><AdminCompanyDocuments /></ProtectedRoute>} />
           <Route path="/admin/deliveries" element={<ProtectedRoute><AdminDeliveries /></ProtectedRoute>} />
           <Route path="/admin/audit-log" element={<ProtectedRoute><AdminAuditLog /></ProtectedRoute>} />
           <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
           <Route path="/company/onboarding" element={<ProtectedRoute><CompanyOnboarding /></ProtectedRoute>} />
+          <Route path="/company/profile" element={<ProtectedRoute><CompanyProfile /></ProtectedRoute>} />
+          <Route path="/company/documents" element={<ProtectedRoute><CompanyDocuments /></ProtectedRoute>} />
           <Route path="/company/dashboard" element={<ProtectedRoute><CompanyDashboard /></ProtectedRoute>} />
           <Route path="/company/deliveries" element={<ProtectedRoute><CompanyDeliveries /></ProtectedRoute>} />
           <Route path="/company/settings" element={<ProtectedRoute><CompanySettings /></ProtectedRoute>} />
