@@ -19,6 +19,7 @@ Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 've
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/change-password', [AuthController::class, 'changePassword']);
     Route::post('/email/resend', [EmailVerificationController::class, 'resend']);
 
     Route::prefix('partner')->group(function () {

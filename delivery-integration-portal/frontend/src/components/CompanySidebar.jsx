@@ -7,6 +7,7 @@ const links = [
   { label: 'Company Profile', path: '/company/profile', icon: '🏢' },
   { label: 'Documents', path: '/company/documents', icon: '📄' },
   { label: 'Developer Settings', path: '/company/settings', icon: '🔑' },
+  { label: 'Change Password', path: '/company/change-password', icon: '🔒' },
 ];
 
 export default function CompanySidebar() {

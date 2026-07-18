@@ -46,7 +46,7 @@ class AdminController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
             'type' => 'nullable|string|max:100',
         ]);
 

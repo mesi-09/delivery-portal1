@@ -8,6 +8,7 @@ const links = [
   { label: 'Deliveries', path: '/admin/deliveries', icon: '📦' },
   { label: 'Audit Log', path: '/admin/audit-log', icon: '📋' },
   { label: 'Analytics', path: '/admin/analytics', icon: '📈' },
+  { label: 'Change Password', path: '/admin/change-password', icon: '🔒' },
 ];
 
 export default function Sidebar() {

@@ -81,6 +81,15 @@ export default function CompanyDocuments() {
           </form>
           {docError && <p className="text-red-500 text-sm mb-4">{docError}</p>}
 
+          {documents.length > 0 && (
+            <button
+              onClick={() => alert("Your documents are visible to the admin team and will be reviewed shortly. No further action needed.")}
+              className="mb-6 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm flex items-center gap-2"
+            >
+              <span>Notify Admin for Review</span>
+            </button>
+          )}
+
           {documents.length === 0 ? (
             <p className="text-gray-500 text-sm">No documents uploaded yet.</p>
           ) : (

@@ -46,7 +46,7 @@ class PartnerController extends Controller
         }
         $partnerData = $partner->toArray();
         $partnerData['profile_picture_url'] = $partner->profile_picture_path
-            ? \Illuminate\Support\Facades\Storage::disk('public')->url($partner->profile_picture_path)
+            ? $request->getSchemeAndHttpHost() . '/storage/' . $partner->profile_picture_path
             : null;
         return response()->json(['partner' => $partnerData]);
     }
@@ -100,7 +100,7 @@ class PartnerController extends Controller
 
         return response()->json([
             'message' => 'Profile picture updated',
-            'profile_picture_url' => \Illuminate\Support\Facades\Storage::disk('public')->url($path),
+            'profile_picture_url' => $request->getSchemeAndHttpHost() . '/storage/' . $path,
         ]);
     }
 
@@ -209,7 +209,7 @@ class PartnerController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
             'type' => 'nullable|string|max:100',
         ]);
 

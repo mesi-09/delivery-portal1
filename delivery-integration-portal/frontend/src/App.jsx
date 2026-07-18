@@ -14,6 +14,7 @@ import CompanyOnboarding from './pages/CompanyOnboarding';
 import CompanyProfile from './pages/CompanyProfile';
 import CompanyDocuments from './pages/CompanyDocuments';
 import AdminApprovalRequests from './pages/AdminApprovalRequests';
+import ChangePassword from './pages/ChangePassword';
 import CompanyDashboard from './pages/CompanyDashboard';
 import CompanyDeliveries from './pages/CompanyDeliveries';
 import CompanySettings from './pages/CompanySettings';
@@ -34,12 +35,14 @@ function App() {
           <Route path="/admin/deliveries" element={<ProtectedRoute><AdminDeliveries /></ProtectedRoute>} />
           <Route path="/admin/audit-log" element={<ProtectedRoute><AdminAuditLog /></ProtectedRoute>} />
           <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
+          <Route path="/admin/change-password" element={<ProtectedRoute><ChangePassword role="admin" /></ProtectedRoute>} />
           <Route path="/company/onboarding" element={<ProtectedRoute><CompanyOnboarding /></ProtectedRoute>} />
           <Route path="/company/profile" element={<ProtectedRoute><CompanyProfile /></ProtectedRoute>} />
           <Route path="/company/documents" element={<ProtectedRoute><CompanyDocuments /></ProtectedRoute>} />
           <Route path="/company/dashboard" element={<ProtectedRoute><CompanyDashboard /></ProtectedRoute>} />
           <Route path="/company/deliveries" element={<ProtectedRoute><CompanyDeliveries /></ProtectedRoute>} />
           <Route path="/company/settings" element={<ProtectedRoute><CompanySettings /></ProtectedRoute>} />
+          <Route path="/company/change-password" element={<ProtectedRoute><ChangePassword role="partner" /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
